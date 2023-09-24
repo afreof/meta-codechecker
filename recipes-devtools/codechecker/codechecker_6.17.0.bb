@@ -12,8 +12,6 @@ PYPI_PACKAGE = "codechecker"
 
 inherit pypi setuptools3-base
 
-SRC_URI += " file://0001-Don-t-require-fix-version-of-dependancies.patch"
-
 DEPENDS += "\
     ${PYTHON_PN}-pip-native \
 "
@@ -28,6 +26,24 @@ RDEPENDS_${PN} += "python3-pyyaml python3-git"
 
 RDEPENDS_${PN}_class-native += " clang-native"
 RDEPENDS_${PN}_class-nativesdk += " nativesdk-clang"
+
+
+# Strip the exact versions from the python dependencies and
+# use the versions which are available as native packages.
+# Like: sed -i -e 's/==.*$//g' "${S}/analyzer/requirements.txt"
+do_patch:append() {
+    def search_and_replace(filename):
+        with open(filename, 'r') as file:
+            lines_in = file.readlines()
+            lines_out = [line.strip().split('==')[0] for line in lines_in]
+        with open(filename, 'w') as file:
+            file.write(os.linesep.join(lines_out))
+
+    s = d.getVar('S')
+    search_and_replace(os.path.join(s, "analyzer", "requirements.txt"))
+    search_and_replace(os.path.join(s, "build_dist", "CodeChecker", "lib", "python3", "codechecker.egg-info", "requires.txt"))
+    search_and_replace(os.path.join(s, "web", "requirements.txt"))
+}
 
 do_install() {
     # CodeChecker use a native namespace package and can't be installed using
