@@ -5,8 +5,7 @@ LICENSE = "Apache-2.0"
 # The pypi package doesn't include a license file
 LIC_FILES_CHKSUM = "file://LICENSE.TXT;md5=2e982d844baa4df1c80de75470e0c5cb"
 
-SRC_URI[md5sum] = "edd6a862af82a573f924ef14b40dd4db"
-SRC_URI[sha256sum] = "1affc5fc6b21749050e36530868583c672852a448fd07bc7a221eb1d7d05b663"
+SRC_URI[sha256sum] = "6ceae801bb117fd9fbbaf6c2df6d53400a2d1ed1480afdc15453e19e54e68788"
 
 PYPI_PACKAGE = "codechecker"
 
