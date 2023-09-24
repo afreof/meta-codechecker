@@ -82,7 +82,8 @@ if test x"${CODECHECKER_ENABLED}" = x"1"; then
     export CC_LOGGER_FILE="${B}/compile_commands.json"
     export CC_ANALYSE_OUT="${DEPLOY_DIR}/CodeChecker/${PN}/results/"
     if test -f ${CC_LOGGER_FILE} ; then
-        CodeChecker analyze ${PARALLEL_MAKE} ${CODECHECKER_ANALYZE_EXTRA_ARGS} -o ${CC_ANALYSE_OUT} --report-hash context-free-v2 ${CC_LOGGER_FILE} || true
+        parallel_make_j="$(echo "${PARALLEL_MAKE}" | sed -rn 's/^.*(-j *[0-9]+).*$/\1/p')"
+        CodeChecker analyze $parallel_make_j ${CODECHECKER_ANALYZE_EXTRA_ARGS} -o ${CC_ANALYSE_OUT} --report-hash context-free-v2 ${CC_LOGGER_FILE} | true
     fi
 fi
 }
