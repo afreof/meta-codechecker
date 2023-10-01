@@ -17,13 +17,7 @@ python () {
             codechecker_use_compile_commands_json_from_configure = False
 
             # For supported build systems the compile_commands.json can be generated during config
-            # CMake can generate the compile_commands.json if CMAKE_EXPORT_COMPILE_COMMANDS=ON
-            if bb.data.inherits_class('cmake', d):
-                d.appendVar("EXTRA_OECMAKE", " -DCMAKE_EXPORT_COMPILE_COMMANDS=ON")
-                codechecker_use_compile_commands_json_from_configure = True
-
-            # Meson generates the compile_commands.json by default
-            if bb.data.inherits_class('meson', d):
+            if bb.data.inherits_class('cmake', d) or bb.data.inherits_class('meson', d):
                 codechecker_use_compile_commands_json_from_configure = True
 
             codechecker_deps = ' codechecker-native:do_populate_sysroot python3-six-native:do_populate_sysroot python3-thrift-native:do_populate_sysroot clang-native:do_populate_sysroot python3-native:do_populate_sysroot python3-psutil-native:do_populate_sysroot python3-portalocker-native:do_populate_sysroot python3-pyyaml-native:do_populate_sysroot python3-git-native:do_populate_sysroot python3-alembic-native:do_populate_sysroot python3-sqlalchemy-native:do_populate_sysroot python3-mypy-extensions-native:do_populate_sysroot python3-lxml-native:do_populate_sysroot python3-markupsafe-native:do_populate_sysroot'
