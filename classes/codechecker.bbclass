@@ -1,4 +1,4 @@
-inherit python3-dir
+PYTHON_BASEVERSION = "3.11"
 
 CODECHECKER_EXCLUDED_PACKAGES ??= "libgcc-initial glibc gcc-runtime smack"
 CODECHECKER_REPORT_ENDPOINT ??= "Default"
